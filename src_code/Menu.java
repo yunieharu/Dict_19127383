@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,9 +14,9 @@ import javax.swing.JLabel;
 
 public class Menu extends JFrame implements ActionListener {
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
+    Slang_Word words = new Slang_Word();
 
-
-    Menu() {
+    Menu() throws IOException {
 
 
         Container container = getContentPane();
@@ -96,7 +97,13 @@ public class Menu extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == b2){
+            try {
+                words.search_with_slang_word("abc");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
 
     }
     public static void main(String[] args) throws Exception {
