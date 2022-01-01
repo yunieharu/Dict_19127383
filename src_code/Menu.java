@@ -104,6 +104,9 @@ public class Menu extends JFrame implements ActionListener {
                 ex.printStackTrace();
             }
         }
+        if (e.getSource() == b3){
+            words.find_slang_word_with_keyword("funny");
+        }
 
     }
     public static void main(String[] args) throws Exception {

@@ -2,6 +2,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Slang_Word {
@@ -58,7 +59,7 @@ public class Slang_Word {
     }
     public List<String> search_with_slang_word(String key) throws IOException{
         List<String> search_key = words.get(key);
-        FileWriter myWriter = new FileWriter("fileHistory");
+        FileWriter myWriter = new FileWriter(fileHistory);
         StringBuilder builder = new StringBuilder();
         if (search_key == null) {
             builder.append(key + "    |Can not find in Dictionary");
@@ -76,6 +77,20 @@ public class Slang_Word {
             return search_key;
         }
 
+    }
+    public  TreeMap<String,String> find_slang_word_with_keyword (String keyword){
+        TreeMap<String,String> search_defi = new TreeMap<>();
+
+        for (Map.Entry<String, List<String>> entry : words.entrySet()) {
+            List<String> meanings = entry.getValue();
+            for (String s : meanings) {
+                if (s.toLowerCase().contains(keyword.toLowerCase())){
+                  search_defi.put(entry.getKey(),s);
+                  System.out.println(entry.getKey()+"    :"+ s);
+                }
+            }
+        }
+        return search_defi;
     }
 }
 
