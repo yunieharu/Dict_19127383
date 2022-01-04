@@ -111,6 +111,7 @@ public class Menu extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == b1){
             try {
+
                 words.search_with_slang_word("abc");
             } catch (IOException ex) {
                 ex.printStackTrace();

@@ -1,9 +1,6 @@
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Slang_Word {
     private TreeMap<String, List<String>> words = new TreeMap<>();
@@ -59,7 +56,6 @@ public class Slang_Word {
         }
     }
     public List<String> search_with_slang_word(String key) throws IOException{
-        List<String> search_key = words.get(key);
         FileWriter myWriter = new FileWriter(fileHistory);
         StringBuilder builder = new StringBuilder();
         File file = new File(fileHistory);
@@ -70,8 +66,15 @@ public class Slang_Word {
                 line = reader.readLine();
                 builder.append(line);
             }
-
-        if (search_key == null) {
+        Set<String>  keys = words.keySet();
+        List <String> key_search = new ArrayList<String>();
+        System.out.println(key);
+        for (String s : keys) {
+                if (s.contains(key)){
+                    key_search.add(s);
+                }
+        }
+        if (key_search == null) {
             builder.append(key + "    |Can not find in Dictionary");
             builder.append('\n');
             myWriter.write(builder.toString());
@@ -83,8 +86,7 @@ public class Slang_Word {
             builder.append('\n');
             myWriter.write(builder.toString());
             myWriter.close();
-            System.out.println(search_key);
-            return search_key;
+            return key_search;
         }
 
     }
