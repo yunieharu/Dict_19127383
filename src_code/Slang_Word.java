@@ -18,6 +18,7 @@ public class Slang_Word {
     }
     public void Reload_fileroot() throws IOException {
         Load_file(fileRoot);
+        saveFile();
     }
     public void Load_file(String filename) throws IOException {
         BufferedReader reader = null;

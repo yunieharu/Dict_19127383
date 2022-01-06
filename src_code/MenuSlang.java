@@ -478,13 +478,16 @@ public class MenuSlang extends javax.swing.JFrame {
 
                 if(n == JOptionPane.YES_OPTION){
                     words.Overwrite_word(word,defi);
+                    JOptionPane.showMessageDialog(this, "Overwrited " +word +" successfully");
                 }else if (n == JOptionPane.NO_OPTION){
                     words.Duplicate_word(word,defi);
+                    JOptionPane.showMessageDialog(this, "Duplicated " +word +" successfully");
                 }else {
                 }
             }
             else {
                 words.Add_slang_word(word, defi);
+                JOptionPane.showMessageDialog(this, "Added " +word +" successfully");
             }
         }
     }
