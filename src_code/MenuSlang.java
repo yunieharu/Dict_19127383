@@ -309,7 +309,7 @@ public class MenuSlang extends javax.swing.JFrame {
                                 .addContainerGap(180, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Quiz1", jPanel4);
+        jTabbedPane1.addTab("Quiz Word", jPanel4);
 
         a2Button.setText("A");
         a2Button.addActionListener(new java.awt.event.ActionListener() {
@@ -384,7 +384,7 @@ public class MenuSlang extends javax.swing.JFrame {
                                 .addContainerGap(176, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Quiz2", jPanel3);
+        jTabbedPane1.addTab("Quiz Definition", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

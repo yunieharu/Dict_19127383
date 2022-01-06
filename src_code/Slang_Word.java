@@ -260,7 +260,7 @@ public class Slang_Word {
     public String[] Quiz_Word(){
         String[] Quiz = new String [6];
         int min = 0;
-        int max = size-1;
+        int max = words.size()-1;
         int random_int;
         boolean b= true;
         int [] checkWord =new int [4];
@@ -284,7 +284,7 @@ public class Slang_Word {
     public String[] Quiz_Defi(){
         String[] Quiz = new String [6];
         int min = 0;
-        int max = size-1;
+        int max = words.size()-1;
         int random_int;
         boolean b= true;
         int [] checkWord =new int [4];
