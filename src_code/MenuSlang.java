@@ -14,6 +14,8 @@ import java.io.IOException;
  */
 public class MenuSlang extends javax.swing.JFrame {
     Slang_Word words = new Slang_Word();
+    String []Quiz = new String [6];
+    int score =0;
     /**
      * Creates new form NewJFrame
      */
@@ -29,6 +31,7 @@ public class MenuSlang extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
+        reloadButton = new javax.swing.JButton();
         jTextArea1 = new javax.swing.JTextArea();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -54,7 +57,7 @@ public class MenuSlang extends javax.swing.JFrame {
         b1Button = new javax.swing.JButton();
         c1Button = new javax.swing.JButton();
         d1Button = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        Create1Button = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         a2Button = new javax.swing.JButton();
         b2Button = new javax.swing.JButton();
@@ -118,7 +121,16 @@ public class MenuSlang extends javax.swing.JFrame {
         });
 
         jScrollPane4.setViewportView(jList2);
-
+        reloadButton.setText("Reload file root");
+        reloadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    reloadButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -147,6 +159,10 @@ public class MenuSlang extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(reloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +182,9 @@ public class MenuSlang extends javax.swing.JFrame {
                                         .addComponent(addButton)
                                         .addComponent(editButton)
                                         .addComponent(deleteButton))
-                                .addContainerGap(59, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(reloadButton)
+                                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Slang", jPanel1);
@@ -215,22 +233,39 @@ public class MenuSlang extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Random", jPanel2);
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Question: ");
 
-        a1Button.setText("jButton2");
-
-        b1Button.setText("jButton3");
+        a1Button.setText("A");
+        a1Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                a1ButtonActionPerformed(evt);
+            }
+        });
+        b1Button.setText("B");
         b1Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b1ButtonActionPerformed(evt);
             }
         });
 
-        c1Button.setText("jButton4");
-
-        d1Button.setText("jButton5");
-
-        jButton6.setText("New question");
+        c1Button.setText("C");
+        c1Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                c1ButtonActionPerformed(evt);
+            }
+        });
+        d1Button.setText("D");
+        d1Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                d1ButtonActionPerformed(evt);
+            }
+        });
+        Create1Button.setText("New question");
+        Create1Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Create1ButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -248,14 +283,14 @@ public class MenuSlang extends javax.swing.JFrame {
                                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(b1Button, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                                                         .addComponent(d1Button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                        .addComponent(jButton6))
+                                        .addComponent(Create1Button))
                                 .addContainerGap(99, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton6)
+                                .addComponent(Create1Button)
                                 .addGap(30, 30, 30)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
@@ -488,16 +523,88 @@ public class MenuSlang extends javax.swing.JFrame {
             }
         }
     }
+    private void reloadButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
+        // TODO add your handling code here:
+        words.Reload_fileroot();
+        JOptionPane.showMessageDialog(this, "Reload file root successfully");
+    }
+
     private void dataTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
     private void randomButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
         String[] randomW = words.Random_word();
         jTextArea1.setText(randomW[0] +": "+randomW[1]);
     }
+    private void Create1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        a1Button.setBackground(Color.white);
+        b1Button.setBackground(Color.white);
+        c1Button.setBackground(Color.white);
+        d1Button.setBackground(Color.white);
 
+        Quiz =words.Quiz_Word();
+        jLabel3.setText("Question: Word   "+Quiz[0] +"  is that mean:");
+        a1Button.setText(Quiz[1]);
+        b1Button.setText(Quiz[2]);
+        c1Button.setText(Quiz[3]);
+        d1Button.setText(Quiz[4]);
+
+
+    }
+    boolean checkans(int x){
+        if (Quiz[x].contains(Quiz[5]))
+            return true;
+        return false;
+    }
+    private void a1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if (checkans(1)) {
+            a1Button.setBackground(Color.green);
+            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        }
+        else {
+            a1Button.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Incorrect.");
+        }
+    }
+    private void b1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if (checkans(2)) {
+            b1Button.setBackground(Color.green);
+            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        }
+        else {
+            b1Button.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Incorrect.");
+        }
+
+    }
+    private void c1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if (checkans(3)) {
+            c1Button.setBackground(Color.green);
+            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        }
+        else {
+            c1Button.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Incorrect.");
+        }
+    }
+    private void d1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if (checkans(4)) {
+            d1Button.setBackground(Color.green);
+            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        }
+        else {
+            d1Button.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Incorrect.");
+        }
+    }
     private void b2ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -510,9 +617,7 @@ public class MenuSlang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void b1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+
 
     /**
      * @param args the command line arguments
@@ -573,7 +678,7 @@ public class MenuSlang extends javax.swing.JFrame {
     private javax.swing.JButton findButton;
     private javax.swing.JLabel historyLabel;
     private javax.swing.JButton randomButton;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton Create1Button;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -591,5 +696,6 @@ public class MenuSlang extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JScrollPane searchPane;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton reloadButton;
     // End of variables declaration
 }

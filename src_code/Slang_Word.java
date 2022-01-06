@@ -6,6 +6,7 @@ public class Slang_Word {
     private TreeMap<String, List<String>> words = new TreeMap<>();
     private int size;
 
+    List <String> checkDefi = new ArrayList<>();
 
     private String filename = "slang_current.txt";
     private String fileHistory = "slang_history.txt";
@@ -15,7 +16,9 @@ public class Slang_Word {
         Load_file(filename);
         System.out.println("Loading successfully!");
     }
-
+    public void Reload_fileroot() throws IOException {
+        Load_file(fileRoot);
+    }
     public void Load_file(String filename) throws IOException {
         BufferedReader reader = null;
         String line = "";
@@ -163,12 +166,18 @@ public class Slang_Word {
         }
         return false;
     }
+    public int getSize(){
+        return size;
+    }
+    public static int randInt(int min, int max) {
+        return (min + (int) (Math.random() * max));
+    }
     public String[] Random_word(){
         String[] ran_word = new String[2];
-        int min = 0;
-        int max = size-1;
-        int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
         int i=0;
+        int min = 0;
+        int max = getSize()-1;
+        int random_int=(int)Math.floor(Math.random()*(max-min+1)+min);
         for (String s: words.keySet()){
             if (i==random_int){
                 ran_word[0] = s;
@@ -186,6 +195,48 @@ public class Slang_Word {
             i++;
         }
         return ran_word;
+    }
+    public String[] Random_word_1_Defi()
+    {
+        String[] ran_word = new String[2];
+        int i=0;
+        int min = 0;
+        int max = getSize()-1;
+        int random_int=(int)Math.floor(Math.random()*(max-min+1)+min);
+        for (String s: words.keySet()){
+            if (i==random_int){
+                ran_word[0] = s;
+                ran_word[1]= words.get(s).get(0);
+
+                break;
+            }
+            i++;
+        }
+        return ran_word;
+    }
+    public String[] Quiz_Word(){
+        String[] Quiz = new String [6];
+        int min = 0;
+        int max = size-1;
+        int random_int;
+        boolean b= true;
+        int [] checkWord =new int [4];
+        int rand = randInt(1, 4);
+        String result[] = Random_word_1_Defi();
+        Quiz[5]= result[1];
+        Quiz[0] = result[0];
+        Quiz[rand] = result[1];
+        System.out.println(Quiz[0]);
+        for (int i=1; i<5; i++){
+            if (i!=rand){
+                String [] temp = Random_word_1_Defi();
+                while (temp[0].equals(result[0]) ){
+                    temp = Random_word_1_Defi();
+                }
+                Quiz[i] = temp[1];
+            }
+        }
+        return Quiz;
     }
 }
 
