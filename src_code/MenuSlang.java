@@ -14,8 +14,9 @@ import java.io.IOException;
  */
 public class MenuSlang extends javax.swing.JFrame {
     Slang_Word words = new Slang_Word();
-    String []Quiz = new String [6];
-    int score =0;
+    String [] Quiz_with_Word = new String [6];
+    String [] Quiz_with_Defi = new String [6];
+
     /**
      * Creates new form NewJFrame
      */
@@ -64,7 +65,7 @@ public class MenuSlang extends javax.swing.JFrame {
         c2Button = new javax.swing.JButton();
         d2Button = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        Create2Button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,7 +103,11 @@ public class MenuSlang extends javax.swing.JFrame {
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                try {
+                    addButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -306,33 +311,41 @@ public class MenuSlang extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Quiz1", jPanel4);
 
-        a2Button.setText("jButton3");
-
-        b2Button.setText("jButton2");
+        a2Button.setText("A");
+        a2Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                a2ButtonActionPerformed(evt);
+            }
+        });
+        b2Button.setText("B");
         b2Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b2ButtonActionPerformed(evt);
             }
         });
 
-        c2Button.setText("jButton2");
+        c2Button.setText("C");
         c2Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 c2ButtonActionPerformed(evt);
             }
         });
 
-        d2Button.setText("jButton2");
+        d2Button.setText("D");
         d2Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 d2ButtonActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("Question: ");
 
-        jButton7.setText("New question");
-
+        Create2Button.setText("New question");
+        Create2Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Create2ButtonActionPerformed(evt);
+            }
+        });
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -350,14 +363,14 @@ public class MenuSlang extends javax.swing.JFrame {
                                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                                 .addComponent(b2Button, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                                                                 .addComponent(d2Button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                        .addComponent(jButton7))
+                                        .addComponent(Create2Button))
                                 .addContainerGap(99, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton7)
+                                .addComponent(Create2Button)
                                 .addGap(34, 34, 34)
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
@@ -433,7 +446,7 @@ public class MenuSlang extends javax.swing.JFrame {
         }
     }
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         // TODO add your handling code here:
         JTextField xField = new JTextField(5);
         JTextField yField = new JTextField(10);
@@ -546,75 +559,181 @@ public class MenuSlang extends javax.swing.JFrame {
         c1Button.setBackground(Color.white);
         d1Button.setBackground(Color.white);
 
-        Quiz =words.Quiz_Word();
-        jLabel3.setText("Question: Word   "+Quiz[0] +"  is that mean:");
-        a1Button.setText(Quiz[1]);
-        b1Button.setText(Quiz[2]);
-        c1Button.setText(Quiz[3]);
-        d1Button.setText(Quiz[4]);
+        Quiz_with_Word =words.Quiz_Word();
+        jLabel3.setText("Question: Word   "+ Quiz_with_Word[0] +"  is that mean:");
+        a1Button.setText(Quiz_with_Word[1]);
+        b1Button.setText(Quiz_with_Word[2]);
+        c1Button.setText(Quiz_with_Word[3]);
+        d1Button.setText(Quiz_with_Word[4]);
 
 
     }
     boolean checkans(int x){
-        if (Quiz[x].contains(Quiz[5]))
+        if (Quiz_with_Word[x].contains(Quiz_with_Word[5]))
+            return true;
+        return false;
+    }
+    boolean checkans_2(int x){
+        if (Quiz_with_Defi[x].contains(Quiz_with_Defi[5]))
             return true;
         return false;
     }
     private void a1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        if (checkans(1)) {
-            a1Button.setBackground(Color.green);
-            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        if (a1Button.getText().equals("A"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
         }
-        else {
-            a1Button.setBackground(Color.red);
-            JOptionPane.showMessageDialog(this, "Incorrect.");
+        else
+        {
+            if (checkans(1)) {
+                a1Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                a1Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
         }
     }
     private void b1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        if (checkans(2)) {
-            b1Button.setBackground(Color.green);
-            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        if (b1Button.getText().equals("B"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
         }
-        else {
-            b1Button.setBackground(Color.red);
-            JOptionPane.showMessageDialog(this, "Incorrect.");
+        else
+        {
+            if (checkans(2)) {
+                b1Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                b1Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
         }
 
     }
     private void c1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        if (checkans(3)) {
-            c1Button.setBackground(Color.green);
-            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        if (c1Button.getText().equals("C"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
         }
-        else {
-            c1Button.setBackground(Color.red);
-            JOptionPane.showMessageDialog(this, "Incorrect.");
+        else
+        {
+            if (checkans(3)) {
+               c1Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                c1Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
         }
+
     }
     private void d1ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        if (checkans(4)) {
-            d1Button.setBackground(Color.green);
-            JOptionPane.showMessageDialog(this, "Correct Answer.");
+        if (d1Button.getText().equals("D"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
         }
-        else {
-            d1Button.setBackground(Color.red);
-            JOptionPane.showMessageDialog(this, "Incorrect.");
+        else
+        {
+            if (checkans(4)) {
+                d1Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                d1Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
+        }
+
+    }
+    private void Create2ButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        a2Button.setBackground(Color.white);
+        b2Button.setBackground(Color.white);
+        c2Button.setBackground(Color.white);
+        d2Button.setBackground(Color.white);
+
+        Quiz_with_Defi=words.Quiz_Defi();
+        jLabel2.setText("Question: "+ Quiz_with_Defi[0] +"  is the definition of..:");
+        for (int i=0; i<6; i++)
+            System.out.println(Quiz_with_Defi[i]);
+        a2Button.setText(Quiz_with_Defi[1]);
+        b2Button.setText(Quiz_with_Defi[2]);
+        c2Button.setText(Quiz_with_Defi[3]);
+        d2Button.setText(Quiz_with_Defi[4]);
+    }
+    private void a2ButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if (a2Button.getText().equals("A"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
+        }
+        else
+        {
+            if (checkans_2(1)) {
+                a2Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                a2Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
         }
     }
     private void b2ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        if (b2Button.getText().equals("B"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
+        }
+        else
+        {
+            if (checkans_2(2)) {
+                b2Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                b2Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
+        }
     }
 
     private void c2ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        if (c2Button.getText().equals("C"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
+        }
+        else
+        {
+            if (checkans_2(3)) {
+                c2Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                c2Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
+        }
     }
 
     private void d2ButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        if (d2Button.getText().equals("D"))
+        {
+            JOptionPane.showMessageDialog(this, "You have not created a question to choose the answer!");
+        }
+        else
+        {
+            if (checkans_2(4)) {
+                d2Button.setBackground(Color.green);
+                JOptionPane.showMessageDialog(this, "Correct Answer.");
+            } else {
+                d2Button.setBackground(Color.red);
+                JOptionPane.showMessageDialog(this, "Incorrect.");
+            }
+        }
     }
 
 
@@ -679,7 +798,7 @@ public class MenuSlang extends javax.swing.JFrame {
     private javax.swing.JLabel historyLabel;
     private javax.swing.JButton randomButton;
     private javax.swing.JButton Create1Button;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton Create2Button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

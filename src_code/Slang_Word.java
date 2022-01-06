@@ -41,9 +41,10 @@ public class Slang_Word {
                             meanings.add(str[1]);
 
                         }
-                        size = size +1;
+
                         words.put(str[0], meanings);
                     }
+
                     catch (NumberFormatException e){
                         e.printStackTrace();
                     }
@@ -60,6 +61,7 @@ public class Slang_Word {
         finally {
             reader.close();
         }
+        size =words.size();
     }
     public void Savefile_History(String text) throws IOException {
 
@@ -75,6 +77,30 @@ public class Slang_Word {
         info.write(text);
         info.write("\n");
         info.close();
+    }
+    void saveFile() throws IOException {
+        PrintWriter printWriter = new PrintWriter(new File(filename));
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Slag`Meaning\n");
+        Set<Map.Entry<String, List<String>>> entrySet
+                = words.entrySet();
+
+        // Convert entrySet to Array using toArray method
+        Map.Entry<String, List<String>>[] entryArray
+                = entrySet.toArray(
+                new Map.Entry[entrySet.size()]);
+        for (int i = 0; i <words.size(); i++){
+            String s = entryArray[i].getKey();
+            List<String> meaning = words.get(s);
+            builder.append(s + "`" + meaning.get(0));
+            for (int j = 1; j < meaning.size(); j++) {
+                builder.append("|" + meaning.get(j));
+            }
+            builder.append("\n");
+        }
+        printWriter.write(builder.toString());
+        printWriter.close();
     }
     public List<String> loadFileHistory () throws IOException {
         List <String> loadHis =  new ArrayList<String>();
@@ -131,18 +157,24 @@ public class Slang_Word {
         return result;
     }
 
-    public void Add_slang_word(String word, String meaning){
+    public void Add_slang_word(String word, String meaning) throws IOException {
         String[] split_mean= meaning.split("\\|");
         int n = split_mean.length;
         List<String> mean_1 = List.of(split_mean);
         size = size+1;
         words.put(word, mean_1);
+        saveFile();
     }
     public void Overwrite_word(String word, String meaning){
         String[] split_mean= meaning.split("\\|");
         List<String> mean_1 = List.of(split_mean);
         List<String> search_key = words.get(word);
         words.put(word, mean_1);
+        try {
+            saveFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void Duplicate_word(String word, String meaning){
         String[] split_mean= meaning.split("\\|");
@@ -152,12 +184,22 @@ public class Slang_Word {
             search_key.add(split_mean[i]);
         }
         words.put(word, search_key);
+        try {
+            saveFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void Edit_slang_word(String word, String meaning){
-        Overwrite_word(word,meaning);
+        Overwrite_word(word,meaning) ;
     }
     public void Delete_slang_word(String word){
         words.remove(word);
+        try {
+            saveFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public boolean check(String word) {
         for (String s : words.keySet()) {
@@ -226,7 +268,7 @@ public class Slang_Word {
         Quiz[5]= result[1];
         Quiz[0] = result[0];
         Quiz[rand] = result[1];
-        System.out.println(Quiz[0]);
+
         for (int i=1; i<5; i++){
             if (i!=rand){
                 String [] temp = Random_word_1_Defi();
@@ -234,6 +276,29 @@ public class Slang_Word {
                     temp = Random_word_1_Defi();
                 }
                 Quiz[i] = temp[1];
+            }
+        }
+        return Quiz;
+    }
+    public String[] Quiz_Defi(){
+        String[] Quiz = new String [6];
+        int min = 0;
+        int max = size-1;
+        int random_int;
+        boolean b= true;
+        int [] checkWord =new int [4];
+        int rand = randInt(1, 4);
+        String result[] = Random_word_1_Defi();
+        Quiz[5]= result[0];
+        Quiz[0] = result[1];
+        Quiz[rand] = result[0];
+        for (int i=1; i<5; i++){
+            if (i!=rand){
+                String [] temp = Random_word_1_Defi();
+                while (temp[1].equals(result[0]) ){
+                    temp = Random_word_1_Defi();
+                }
+                Quiz[i] = temp[0];
             }
         }
         return Quiz;
