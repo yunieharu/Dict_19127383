@@ -5,6 +5,8 @@ import java.util.*;
 public class Slang_Word {
     private TreeMap<String, List<String>> words = new TreeMap<>();
     private int size;
+
+
     private String filename = "slang_current.txt";
     private String fileHistory = "slang_history.txt";
     private String fileRoot = "slang.txt";
@@ -13,6 +15,7 @@ public class Slang_Word {
         Load_file(filename);
         System.out.println("Loading successfully!");
     }
+
     public void Load_file(String filename) throws IOException {
         BufferedReader reader = null;
         String line = "";
@@ -55,54 +58,74 @@ public class Slang_Word {
             reader.close();
         }
     }
-    public List<String> search_with_slang_word(String key) throws IOException{
-        FileWriter myWriter = new FileWriter(fileHistory);
-        StringBuilder builder = new StringBuilder();
+    public void Savefile_History(String text) throws IOException {
+
+        List<String> loadHis = loadFileHistory();
+        int n= loadHis.size()-1;
+        FileWriter fstream = new FileWriter (fileHistory);
+        BufferedWriter info = new BufferedWriter(fstream);
+
+        for(int i = 0; i < n; i++) {
+            info.write(loadHis.get(i));
+            info.write("\n");
+        }
+        info.write(text);
+        info.write("\n");
+        info.close();
+    }
+    public List<String> loadFileHistory () throws IOException {
+        List <String> loadHis =  new ArrayList<String>();
         File file = new File(fileHistory);
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line = reader.readLine();
-        builder.append(line);
+        loadHis.add(line);
         while (line != null) {
-                line = reader.readLine();
-                builder.append(line);
-            }
+            line = reader.readLine();
+            loadHis.add(line);
+        }
+        reader.close();
+        return loadHis;
+    }
+    public String[] search_with_slang_word(String key) throws IOException{
         Set<String>  keys = words.keySet();
         List <String> key_search = new ArrayList<String>();
-        System.out.println(key);
+        int i=0;
+
         for (String s : keys) {
                 if (s.contains(key)){
                     key_search.add(s);
+                    i++;
                 }
         }
+        String[] result= new String[i];
+        result= key_search.toArray(new String[0]);
+        Savefile_History(key);
         if (key_search == null) {
-            builder.append(key + "    |Can not find in Dictionary");
-            builder.append('\n');
-            myWriter.write(builder.toString());
-            myWriter.close();
-            System.out.println("Cant find");
             return null;
         } else {
-            builder.append(key + "    |Found in Dictionary");
-            builder.append('\n');
-            myWriter.write(builder.toString());
-            myWriter.close();
-            return key_search;
+            return result;
         }
 
     }
-    public  TreeMap<String,String> find_slang_word_with_keyword (String keyword){
-        TreeMap<String,String> search_defi = new TreeMap<>();
 
+    public  String [][] find_slang_word_with_keyword (String keyword) throws IOException {
+        String result[][] = new String[size][3];
+        Savefile_History(keyword);
+        int temp=0;
         for (Map.Entry<String, List<String>> entry : words.entrySet()) {
             List<String> meanings = entry.getValue();
             for (String s : meanings) {
                 if (s.toLowerCase().contains(keyword.toLowerCase())){
-                  search_defi.put(entry.getKey(),s);
-                  System.out.println(entry.getKey()+"    :"+ s);
+                    result[temp][0]=entry.getKey();
+                    result[temp][1]=s;
+                    String str=String.join(",", meanings);
+                    result[temp][2]=str;
+                    temp++;
+                    break;
                 }
             }
         }
-        return search_defi;
+        return result;
     }
 
     public void Add_slang_word(String word, String meaning){
@@ -152,7 +175,10 @@ public class Slang_Word {
                 List<String> mean = words.get(s);
                 String definition = "";
                 for (String k: mean){
-                    definition=definition+" | " + k;
+                    if (definition.equals(""))
+                        definition=definition +k;
+                    else
+                        definition=definition+" | " + k;
                 }
                 ran_word[1]=definition;
                 break;
