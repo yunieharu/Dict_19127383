@@ -28,7 +28,9 @@ public class Slang_Word {
             String s = reader.readLine();
             while((line = reader.readLine()) != null){
                 List<String> meanings = new ArrayList<String>();
-                if (line.contains("`")){
+                String[] test = line.split("`");
+                int check = test.length;
+                if (check>1){
                     String[] str = line.split("`");
                     try{
 
@@ -178,13 +180,25 @@ public class Slang_Word {
         }
     }
     public void Duplicate_word(String word, String meaning){
-        String[] split_mean= meaning.split("\\|");
-        int n = split_mean.length;
+
         List<String> search_key = words.get(word);
-        for (int i=0; i<n; i++){
-            search_key.add(split_mean[i]);
+        int n= search_key.size();
+        String[] array= new String [n+1];
+        int i=0;
+        for (String s: search_key){
+
+            array[i]=s;
+            i++;
         }
-        words.put(word, search_key);
+        array[i]=meaning;
+        List <String> newlist = new ArrayList<>();
+        System.out.println("CHECK:");
+        for (int j=0; j<n+1; j++) {
+            System.out.println(array[j]);
+            newlist.add(array[j]);
+        }
+        words.put(word,newlist);
+        //words.put(word, search_key);
         try {
             saveFile();
         } catch (IOException e) {

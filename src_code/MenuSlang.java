@@ -461,10 +461,8 @@ public class MenuSlang extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(this, myPanel,
                 "Please Enter Slang Word", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-            System.out.println("Word: " + xField.getText());
             String word= xField.getText();
             String defi= yField.getText();
-            System.out.println("Definition: " + yField.getText());
             if (words.check(word)){
                 Object[] options = {"Overwrite", "Duplicate"};
                 int n = JOptionPane.showOptionDialog(this,
@@ -480,7 +478,9 @@ public class MenuSlang extends javax.swing.JFrame {
                     words.Overwrite_word(word,defi);
                     JOptionPane.showMessageDialog(this, "Overwrited " +word +" successfully");
                 }else if (n == JOptionPane.NO_OPTION){
+
                     words.Duplicate_word(word,defi);
+
                     JOptionPane.showMessageDialog(this, "Duplicated " +word +" successfully");
                 }else {
                 }
